@@ -64,7 +64,7 @@ alias backup-dots="source ~/ducky-dots/update-dots.zsh && update-dots"
 
 ## Segurança
 
-⚠️ **Nunca adicione senhas, chaves privadas ou tokens ao repositório.**  
+**Nunca adicione senhas, chaves privadas ou tokens ao repositório.**  
 Utilize `.gitignore`, `gpg`, `git-crypt`, ou um cofre seguro para lidar com dados sensíveis.
 
 ---
@@ -77,7 +77,7 @@ Utilize `.gitignore`, `gpg`, `git-crypt`, ou um cofre seguro para lidar com dado
 
 ---
 
-## 🔗 Links úteis
+## Links úteis
 
 - [dotfiles.github.io](https://dotfiles.github.io/)
 - [Zsh wiki](https://github.com/ohmyzsh/ohmyzsh/wiki)
