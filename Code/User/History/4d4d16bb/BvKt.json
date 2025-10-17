@@ -1,0 +1,6 @@
+{
+    "security.workspace.trust.banner": "never",
+    "security.workspace.trust.untrustedFiles": "open",
+    "chat.commandCenter.enabled": false,
+    "workbench.secondarySideBar.defaultVisibility": "visible"
+}

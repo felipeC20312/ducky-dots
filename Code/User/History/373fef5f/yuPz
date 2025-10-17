@@ -1,0 +1,263 @@
+# ============================================================
+# 🖖 ZSH CONFIG - Capitão Stardev Enterprise
+# ============================================================
+
+# ===========================
+# HISTÓRICO
+# ===========================
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+setopt share_history
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt append_history
+setopt HIST_FIND_NO_DUPS
+
+# ===========================
+# TECLADO & QUALIDADE DE VIDA
+# ===========================
+bindkey -e
+setopt correct
+setopt no_beep
+setopt auto_cd
+
+# ===========================
+# FUNÇÕES & PATHS
+# ===========================
+add_to_path() {
+  [[ ":$PATH:" != *":$1:"* ]] && export PATH="$1:$PATH"
+}
+
+add_to_path "/usr/local/share/dotnet"
+add_to_path "$HOME/.asdf/shims"
+add_to_path "$HOME/.local/bin"
+add_to_path "$HOME/bin"
+
+zt() {
+  sudo zerotier-cli "$@"
+}
+
+nnote() {
+  local notepath=~/Desktop/docs/notes
+  local note="$1"
+
+  if [[ -z "$note" ]]; then
+    echo -n "New note name: "
+    read note
+  fi
+
+  if [[ -z "$note" ]]; then
+    echo "Name not informed, use date composition? (y/n)"
+    read option
+    case "$option" in
+      y|Y)
+        echo "Continuing with data composition..."
+        local localDate=$(date +"%Y-%m-%d")
+        cd "$notepath"
+        nvim "./newNote-${localDate}.md"
+        return
+      ;;
+      n|N)
+        echo "Opted for not continuing, aborting..."
+        return
+      ;;
+      *)
+        echo "invalid entry. aborting..."
+        return
+      ;;
+    esac
+  fi
+
+  [[ "$note" != *.md ]] && note="${note}.md"
+  cd "$notepath"
+  nvim "./${note}"
+}
+
+
+update-dots() {
+  local notesbackup="$HOME/ducky-dots/"
+  local updatearchives=(".config" ".zshrc" ".bashrc")
+
+  if [[ ! -e $notesbackup ]]; then
+    echo "Diretório $notesbackup não existe. Criando..."
+    mkdir -p "$notesbackup"
+  fi
+
+  echo "Iniciando backup..."
+
+  for item in $updatearchives; do
+    echo "Copiando $item para $notesbackup..."
+
+    if [[ -e $HOME/$item ]]; then
+      cp -r "$HOME/$item" "$notesbackup/" 2>/dev/null
+
+      if [[ $? -eq 0 ]]; then
+        echo "[OK] - $item copiado com sucesso."
+      else
+        echo "[ERRO] - Falha ao copiar $item."
+      fi
+    else
+      echo "[INFO] - $item não existe em $HOME. Ignorando..."
+    fi
+  done
+
+  echo ""
+  echo "Backup concluído."
+  echo ""
+  echo "Deseja atualizar o repositório git? (y/n)"
+
+  read option
+  case "$option" in
+    Y|y)
+      echo "Atualizando repositório Git..."
+      git -C "$notesbackup" add . && git commit -m "backup update" && git push
+      return
+    ;;
+    N|n)
+      echo "Encerrando sem atualizar Git."
+      return
+    ;;
+    *)
+      echo "Entrada inválida. Abortando..."
+      return
+    ;;
+  esac
+}
+
+
+# ===========================
+# VERSION MANAGERS & SDKs
+# ===========================
+
+# ASDF
+export ASDF_DIR="$HOME/.asdf"
+[ -f "$ASDF_DIR/asdf.sh" ] && . "$ASDF_DIR/asdf.sh"
+
+# # NVM (Node)
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && source "/opt/homebrew/opt/nvm/nvm.sh"
+
+# # Android SDK
+# export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
+# add_to_path "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
+# add_to_path "$ANDROID_SDK_ROOT/platform-tools"
+# add_to_path "$ANDROID_SDK_ROOT/emulator"
+# add_to_path "$ANDROID_SDK_ROOT/tools"
+
+# Brew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# ===========================
+# AUTOCOMPLETE
+# ===========================
+autoload -Uz compinit
+compinit
+zstyle :compinstall filename "$HOME/.zshrc"
+
+# ZSH-AUTOCOMPLETE (Estilo PSReadLine)
+source ~/.zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+zstyle ':autocomplete:*' default-context history-incremental-search-backward
+zstyle ':autocomplete:*' min-input 1
+zstyle ':autocomplete:*' list-lines 8
+setopt HIST_FIND_NO_DUPS
+
+bindkey -M menuselect '\r' .accept-line
+
+# ===========================
+# FZF + FZF-TAB
+# ===========================
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+
+export FZF_DEFAULT_OPTS="
+  --height 40%
+  --layout=reverse
+  --border
+  --preview 'bat --style=numbers --color=always --line-range :500 {} || cat {}'
+  --preview-window=right:60%
+"
+
+# FZF-TAB (ativar se instalado)
+# zstyle ':completion:*' menu select
+# zstyle ':completion:*:descriptions' format '[%d]'
+# zstyle ':fzf-tab:*' fzf-command fzf
+
+# ===========================
+# SUGESTÕES & HIGHLIGHTING
+# ===========================
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#7D7D7D'
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# ===========================
+# OUTROS INITs
+# ===========================
+# Zoxide
+eval "$(zoxide init zsh)"
+
+# Oh My Posh
+eval "$(oh-my-posh init zsh --config ~/Desktop/docs/scripts/custom-ohmyposh-theme.json)"
+
+# Angular CLI completion
+source <(ng completion script)
+
+# ===========================
+# ALIASES
+# ===========================
+# Navegação
+alias ..='cd ..'
+alias ...='cd ../..'
+alias jump='z'
+
+# Utilitários
+alias c='clear'
+alias reload='source ~/.zshrc'
+alias update='sudo pacman -Syu'
+
+# Python
+alias python='python3'
+alias py='python3'
+alias pip='pip3'
+
+# Git
+alias gs='git status'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git pull'
+alias gco='git checkout'
+
+# LS (eza com estilo)
+alias ls='eza -l --icons'
+alias la='eza -la --icons'
+alias ll='eza -lh --icons'
+alias tree='eza -T --icons'
+
+# Fd compatível com fzf
+alias fd='fdfind'
+
+# Web Utils
+alias web='xdg-open'
+
+# TheFuck
+eval $(thefuck --alias)
+
+# PHP
+alias php-start='sudo /opt/lampp/lampp start'
+alias php-stop='sudo /opt/lampp/lampp stop'
+alias php-panel='sudo /opt/lampp/manager-linux-x64.run'
+
+# ===========================
+# GLOBAL-VARIABLE
+# ===========================
+
+export H2_HOME="$HOME/.asdf/shims/mvn"
+
+# ===========================
+# MENSAGEM FINAL
+# ===========================
+echo "\n🖖 Terminal pronto, Capitão. Engajando Warp 9 rumo à produtividade!"
+

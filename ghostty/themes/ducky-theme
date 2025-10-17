@@ -1,0 +1,32 @@
+# === GHOSTTY THEME CONFIG ===
+# Estilo: Dark Glassy Elegante - Por Capitão & Data
+
+# === PALETA DE CORES (0–15) ===
+palette = 0=#1E1E2E
+palette = 1=#6C7086
+palette = 2=#A6E3A1
+palette = 3=#F9E2AF
+palette = 4=#89B4FA
+palette = 5=#F38E7D
+palette = 6=#94E2D5
+palette = 7=#D0CFCC
+palette = 8=#6C7086
+palette = 9=#EB847D
+palette = 10=#A6E3A1
+palette = 11=#F9E2AF
+palette = 12=#89B4FA
+palette = 13=#F38E7D
+palette = 14=#94E2D5
+palette = 15=#FFFFFF
+
+# === CORES DE FUNDO E TEXTO ===
+background =#19191C
+foreground =#CDD6F4
+
+# === APARÊNCIA VISUAL ===
+background-opacity=0.95
+background-blur=true
+bold-is-bright= true
+minimum-contrast= 1.1
+window-colorspace= "display-p3"
+

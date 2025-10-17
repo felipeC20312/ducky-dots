@@ -1,0 +1,104 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "template": "<#fab387>\u250c[</> \udb80\udde5 <#fab387>]</>",
+          "foreground": "#f9e2af",
+          "type": "text",
+          "style": "plain"
+        },
+        {
+          "template": "<#fab387>[</>{{ .UserName }}<#fab387>]</>",
+          "foreground": "#cdd6f4",
+          "type": "session",
+          "style": "plain"
+        },
+        {
+          "properties": {
+            "branch_icon": "\uf418 ",
+            "mapped_branches": {
+              "bug/*": "<#f38ba8>\uf188 bug/</>",
+              "develop": "<#89b4fa>\uf013 develop</>",
+              "feat/*": "<#f9e2af>\uee34 feat/</>",
+              "main": "<#fab387>\ueeb1 main</>",
+              "master": "<#fab387>\ueeb1 master</>"
+            }
+          },
+          "template": "<#fab387>[</>{{ .UpstreamIcon }}{{ .HEAD }}<#fab387>]</>",
+          "foreground": "#cdd6f4",
+          "type": "git",
+          "style": "plain"
+        },
+        {
+          "template": "<#fab387>[</>\uf0c7 {{.StashCount}} \uf01b {{ .Ahead }} \uf01a {{ .Behind }}<#fab387>]</>",
+          "foreground": "#f9e2af",
+          "type": "git",
+          "style": "plain",
+          "properties": {
+            "fetch_status": true,
+            "fetch_stash_count": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "template": "<#fab387>\u251c[</>\uf489 {{ .Name }}<#fab387>]</>",
+          "foreground": "#cdd6f4",
+          "type": "shell",
+          "style": "plain"
+        },
+        {
+          "template": "<#fab387>[</>\udb86\udd9f {{ .CurrentDate | date .Format }}<#fab387>]</>",
+          "foreground": "#cdd6f4",
+          "type": "time",
+          "style": "plain"
+        },
+        {
+          "properties": {
+            "not_charging_icon": "󱃍 ",
+            "discharging_icon": "󱊢 ",
+            "charging_icon": "󱊥 ",
+            "charged_icon": "󱊣 "
+          },
+          "template": "<#fab387>[</>{{ if not .Error }}{{ if eq .State.String \"Unknown\" }}󱊣 {{ else }}{{ .Icon }}{{ end }}{{ .Percentage }}%{{ else }}{{ end }}<#fab387>]</>",
+          "type": "battery",
+          "style": "plain",
+          "foreground_templates": [
+            "{{if eq \"Not Charging\" .State.String}}#fab387{{end}}",
+            "{{if eq \"Discharging\" .State.String}}#f9e2af{{end}}",
+            "{{if eq \"Charging\" .State.String}}#89b4fa{{end}}",
+            "{{if eq \"Unknown\" .State.String}}#94e2d5{{end}}",
+            "{{if eq \"Full\" .State.String}}#a6e3a1{{end}}"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "properties": {
+            "style": "full"
+          },
+          "template": "<#fab387>\u2514[</>\uf114 {{ .Path }}<#fab387>]</>",
+          "foreground": "#cdd6f4",
+          "type": "path",
+          "style": "plain"
+        }
+      ]
+    }
+  ],
+  "version": 3,
+  "final_space": true
+}

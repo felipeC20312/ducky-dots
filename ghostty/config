@@ -1,0 +1,55 @@
+# ~/.config/ghostty/config
+
+# === TEMA PERSONALIZADO ===
+theme = ducky-theme
+
+# === FONT CONFIG ===
+font-size = 12
+font-family = "JetBrainsMono Nerd Font"
+font-family-bold = "JetBrainsMono Nerd Font"
+font-synthetic-style = bold
+
+# === CURSOR ===
+cursor-color = #FAB387
+cursor-text = #19191C
+cursor-style = block_hollow
+cursor-style-blink = true
+
+# === COMPORTAMENTO DO MOUSE ===
+mouse-hide-while-typing = true
+
+# === SELEÇÃO ===
+selection-background = #6C7086
+selection-foreground = #CDD6F4
+
+# === ATALHOS DE TECLADO (KEYBINDINGS) ===
+keybind = super+r=reload_config
+
+## SPLITS — Nova divisão
+keybind = super+l=new_split:right
+keybind = super+h=new_split:left
+keybind = super+k=new_split:up
+keybind = super+j=new_split:down
+
+## SPLITS - Size control
+keybind = super+shift+l=resize_split:right,10
+keybind = super+shift+h=resize_split:left,10
+keybind = super+shift+k=resize_split:up,10
+keybind = super+shift+j=resize_split:down,10
+
+## SPLITS — Navegação entre divisões
+keybind = super+alt+l=goto_split:right
+keybind = super+alt+h=goto_split:left
+
+## TABS — Abertura e fechamento
+keybind = ctrl+t=new_tab
+keybind = ctrl+w=close_tab
+
+# === INTERFACE GTK ===
+gtk-titlebar = true
+gtk-tabs-location = top
+gtk-wide-tabs = false
+gtk-adwaita = true
+
+# === COMPORTAMENTO ===
+shell-integration = zsh

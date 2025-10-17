@@ -1,0 +1,17 @@
+[DetailsMode]
+PreviewSize=16
+
+[General]
+RememberOpenedTabs=false
+Version=202
+ViewPropsTimestamp=2025,7,23,15,2,36.526
+
+[KFileDialog Settings]
+Places Icons Auto-resize=false
+Places Icons Static Size=22
+
+[MainWindow]
+MenuBar=Disabled
+
+[PreviewSettings]
+Plugins=appimagethumbnail,audiothumbnail,comicbookthumbnail,cursorthumbnail,directorythumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,opendocumentthumbnail,svgthumbnail,windowsexethumbnail,windowsimagethumbnail,evince,gdk-pixbuf-thumbnailer,gnome-font-viewer,gsf-office,totem
